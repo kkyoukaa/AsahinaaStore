@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Peraturan Pembeli — Asahinaa Store</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --bg1:#0b0f1a; --bg2:#111933;
+      --accent:#7c5cff; --accent-2:#4de2c4;
+      --text:#e6eaf2; --muted:#9aa3b2;
+      --line:#1f2747; --card:#131a2e;
+      --radius:18px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:"Inter",system-ui,Segoe UI,Roboto,sans-serif;
+      color:var(--text);
+      background:linear-gradient(180deg,var(--bg1) 0%, var(--bg2) 100%) fixed;
+      min-height:100vh; line-height:1.6;
+    }
+    header{ text-align:center; padding:40px 20px 20px; }
+    /* Judul pakai gradient yang sama seperti brand footer */
+    .title-gradient{
+      font-size:clamp(28px,3vw,42px); font-weight:700; letter-spacing:1px;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+    header p{ color:var(--muted); margin-top:6px; font-size:15px; }
+    .badge{
+      display:inline-block; margin-top:14px; padding:8px 14px;
+      border:1px solid rgba(124,92,255,.35); border-radius:999px;
+      background:linear-gradient(90deg,rgba(124,92,255,.2),rgba(77,226,196,.2));
+      color:#dfe6ff; font-weight:500; font-size:13px;
+    }
+    .container{ max-width:1100px; margin:30px auto 80px; padding:0 20px; }
+
+    /* toggle buttons */
+    .toggle{ display:flex; justify-content:center; margin-bottom:22px; gap:10px; flex-wrap:wrap; }
+    .toggle button{
+      background:rgba(255,255,255,.06); border:1px solid var(--line);
+      color:var(--text); font-weight:500; border-radius:999px;
+      padding:10px 18px; cursor:pointer; transition:.25s; font-size:14px;
+    }
+    .toggle button.active{
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      color:#fff; border:none; box-shadow:0 0 12px rgba(124,92,255,.4);
+    }
+
+    section{
+      background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+      padding:22px 26px; box-shadow:0 15px 35px rgba(0,0,0,.25);
+      margin-bottom:20px; animation:fadeIn .4s ease;
+    }
+    @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+    h2{ display:flex; align-items:center; gap:10px; font-size:18px; margin-bottom:10px; }
+    h2::before{ content:""; width:10px; height:10px; border-radius:50%;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2)); }
+    p.lead{ color:var(--muted); margin-bottom:12px; font-size:14px; }
+    ul{ list-style:none; display:flex; flex-direction:column; gap:10px; }
+    li{ border:1px solid var(--line); padding:12px 14px; border-radius:12px; background:rgba(255,255,255,.02); }
+    li b{ font-weight:600; }
+    .callout{
+      border:1px dashed rgba(124,92,255,.4); border-radius:14px;
+      background:linear-gradient(180deg,rgba(124,92,255,.08),rgba(77,226,196,.06));
+      padding:12px 14px; margin-top:12px; font-size:14px; color:#eaf2ff;
+    }
+    .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+    .chip{
+      padding:6px 10px; border-radius:999px; border:1px solid var(--line);
+      background:rgba(255,255,255,.03); font-size:12px; color:#dbe3ff;
+    }
+
+    footer{ text-align:center; color:var(--muted); font-size:13px; margin-top:50px; }
+    .brand{
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      -webkit-background-clip:text; background-clip:text; color:transparent; font-weight:700;
+    }
+
+    /* social text links */
+    .contact{
+      max-width:1100px; margin:0 auto; padding:0 20px; margin-top:14px;
+      display:flex; flex-direction:column; gap:10px; align-items:center;
+    }
+    .contact h3{ font-size:14px; color:#dbe3ff; font-weight:600; letter-spacing:.3px; }
+    .links{
+      display:flex; gap:16px; flex-wrap:wrap; justify-content:center;
+    }
+    .links a{
+      text-decoration:none; font-weight:600; font-size:14px; letter-spacing:.2px;
+      color:#ffffff; padding:8px 12px; border-radius:999px;
+      border:1px solid rgba(124,92,255,.35);
+      background:linear-gradient(90deg,rgba(124,92,255,.16),rgba(77,226,196,.16));
+      transition:.25s;
+    }
+    .links a:hover{ transform:translateY(-2px); box-shadow:0 0 12px rgba(124,92,255,.45); }
+
+    /* responsive helpers */
+    #ringkas,#lengkap{ display:none }
+    #ringkas.active,#lengkap.active{ display:block }
+    @media (max-width:560px){
+      section{ padding:18px 16px; }
+      .links a{ font-size:13px; padding:7px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1 class="title-gradient">Asahinaa Store</h1>
+    <p>Peraturan Pembeli</p>
+    <div class="badge">Berlaku untuk <strong>semua game</strong> yang diorder / joki</div>
+  </header>
+
+  <div class="container">
+
+    <div class="toggle">
+      <button id="btnRingkas" class="active">Versi Ringkas</button>
+      <button id="btnLengkap">Versi Lengkap</button>
+    </div>
+
+    <!-- RINGKAS -->
+    <div id="ringkas" class="active">
+      <section>
+        <h2>Ringkasan Peraturan</h2>
+        <ul>
+          <li><b>Order = Setuju Aturan.</b> Melakukan pembelian berarti Anda menyetujui seluruh peraturan toko.</li>
+          <li><b>Tidak bisa cancel.</b> Jika memaksa batal tanpa alasan sah, dikenakan sanksi 50% dari nilai order.</li>
+          <li><b>Gunakan metode pembayaran resmi.</b> Sertakan bukti valid untuk konfirmasi.</li>
+          <li><b>Tidak boleh login game</b> selama proses joki kecuali disetujui seller.</li>
+          <li><b>Refund</b> hanya berlaku jika kesalahan berasal dari pihak toko.</li>
+        </ul>
+        <div class="callout">Dengan melanjutkan transaksi, pembeli dianggap menyetujui seluruh ketentuan tanpa pengecualian.</div>
+      </section>
+    </div>
+
+    <!-- LENGKAP -->
+    <div id="lengkap">
+      <section>
+        <h2>Umum</h2>
+        <p class="lead">Ketentuan dasar yang berlaku untuk seluruh transaksi.</p>
+        <ul>
+          <li><b>Membaca Deskripsi.</b> Pembeli wajib memahami detail produk/jasa sebelum order.</li>
+          <li><b>Perubahan Harga & Stok.</b> Dapat berubah sewaktu-waktu tanpa pemberitahuan.</li>
+          <li><b>Kanal Resmi.</b> Semua komunikasi hanya melalui kanal resmi toko.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Transaksi & Pembayaran</h2>
+        <ul>
+          <li><b>Konfirmasi Transaksi.</b> Sah setelah pembayaran terverifikasi.</li>
+          <li><b>Metode Resmi.</b> Gunakan metode pembayaran yang disediakan toko.</li>
+          <li><b>Bukti Pembayaran.</b> Wajib menunjukkan bukti transfer yang valid.</li>
+          <li><b>Pembatalan.</b> Tidak bisa dibatalkan; paksa batal = sanksi 50% nilai order.</li>
+          <li><b>Perubahan Pesanan.</b> Hanya bisa diubah jika disetujui pihak toko.</li>
+        </ul>
+        <div class="callout">Chargeback tanpa alasan sah dapat mengakibatkan pemblokiran akun pembeli.</div>
+      </section>
+
+      <section>
+        <h2>Game / Joki & Akses Akun</h2>
+        <ul>
+          <li><b>Data Akurat.</b> Pembeli wajib memberikan ID game, server, dan data lain yang benar.</li>
+          <li><b>Larangan Login.</b> Tidak boleh login ke game selama proses tanpa persetujuan seller. Pelanggaran bisa membatalkan garansi/refund.</li>
+          <li><b>Waktu Pengerjaan.</b> Menyesuaikan antrean & kondisi server game.</li>
+        </ul>
+        <div class="chips">
+          <span class="chip">Top-Up</span><span class="chip">Voucher</span><span class="chip">Boost / Rank</span><span class="chip">Akun & Item</span>
+        </div>
+      </section>
+
+      <section>
+        <h2>Garansi & Refund</h2>
+        <ul>
+          <li><b>Refund.</b> Hanya jika kesalahan dari pihak toko.</li>
+          <li><b>Tidak Berlaku.</b> Jika kesalahan berasal dari pembeli (salah ID, salah pesanan, akun sedang login pihak lain).</li>
+          <li><b>Validasi.</b> Proses refund memerlukan bukti transaksi dan komunikasi yang jelas.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Etika & Larangan</h2>
+        <ul>
+          <li><b>Komunikasi Sehat.</b> Dilarang spam, hinaan, ancaman, atau pelecehan terhadap admin/joki.</li>
+          <li><b>Privasi.</b> Dilarang meminta data pribadi admin/joki.</li>
+          <li><b>Pembatalan Sepihak.</b> Dilarang membatalkan pesanan sepihak setelah pengerjaan dimulai.</li>
+          <li><b>Chargeback.</b> Dilarang melakukan chargeback tanpa alasan sah.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Penutup</h2>
+        <p class="lead">Dengan melanjutkan transaksi, pembeli dianggap menyetujui seluruh peraturan ini tanpa pengecualian. Kebijakan dapat diperbarui sewaktu-waktu oleh Asahinaa Store.</p>
+      </section>
+    </div>
+
+    <footer>
+      <div><span class="brand">Asahinaa</span> &copy; <span id="year"></span> — All rights reserved.</div>
+
+      <div class="contact">
+        <h3>Message me:</h3>
+        <div class="links">
+          <a href="https://www.instagram.com/asahinaa_/?utm_source=ig_web_button_share_sheet" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.tiktok.com/@asahinaa_?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener">TikTok</a>
+          <a href="https://discord.com/users/599861697246920707" target="_blank" rel="noopener">Discord</a>
+        </div>
+      </div>
+      <p style="margin-top:10px;color:#8fa0c2;font-size:12px;">
+        Catatan: DM langsung via Discord dengan ID "asahinaaa", Instagram dengan ID "asahinaa_", Tiktok dengan ID "asahinaa_".
+      </p>
+    </footer>
+
+  </div>
+
+  <script>
+    const btnRingkas=document.getElementById('btnRingkas');
+    const btnLengkap=document.getElementById('btnLengkap');
+    const ringkas=document.getElementById('ringkas');
+    const lengkap=document.getElementById('lengkap');
+    function show(mode){
+      if(mode==='ringkas'){
+        ringkas.classList.add('active');
+        lengkap.classList.remove('active');
+        btnRingkas.classList.add('active');
+        btnLengkap.classList.remove('active');
+      }else{
+        lengkap.classList.add('active');
+        ringkas.classList.remove('active');
+        btnLengkap.classList.add('active');
+        btnRingkas.classList.remove('active');
+      }
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+    btnRingkas.onclick=()=>show('ringkas');
+    btnLengkap.onclick=()=>show('lengkap');
+    document.getElementById('year').textContent='2022';
+  </script>
+
+</body>
+</html>
